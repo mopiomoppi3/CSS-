@@ -84,8 +84,6 @@
   details[open] summary::before{transform:rotate(45deg);}
   details pre{margin:9px 0 0;background:#111112;color:#e7e7ea;padding:12px 14px;border-radius:var(--radius-sm);font-family:'SF Mono',Menlo,Consolas,monospace;font-size:11px;line-height:1.65;overflow-x:auto;white-space:pre;}
 
-  .hoverhint{display:inline-block;margin-top:2px;font-size:10.5px;color:var(--ink-soft);}
-
   /* ============ LOADING demos ============ */
   .demo-spinner{width:42px;height:42px;border-radius:50%;border:3px solid #e3e3e6;border-top-color:#111;animation:spin .8s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
@@ -121,26 +119,79 @@
   .demo-ripple span:nth-child(3){animation-delay:1.2s;}
   @keyframes rippleOut{0%{transform:scale(.3);opacity:1;}100%{transform:scale(1.7);opacity:0;}}
 
-  /* ============ HOVER demos (trigger via .card:hover) ============ */
-  .demo-lift{width:86px;height:56px;background:#111;border-radius:16px;transition:transform .4s var(--ease), box-shadow .4s var(--ease);}
-  .card:hover .demo-lift{transform:translateY(-10px);box-shadow:0 18px 26px rgba(0,0,0,.18);}
+  .demo-skeleton{display:flex;flex-direction:column;gap:9px;width:120px;}
+  .demo-skeleton span{display:block;height:10px;border-radius:6px;background:linear-gradient(90deg,#e3e3e6 25%,#f4f4f5 37%,#e3e3e6 63%);background-size:400% 100%;animation:shimmer 1.6s ease-in-out infinite;}
+  .demo-skeleton span:nth-child(2){width:70%;}
+  .demo-skeleton span:nth-child(3){width:85%;}
+  @keyframes shimmer{0%{background-position:100% 0;}100%{background-position:-100% 0;}}
+
+  .demo-circle{width:52px;height:52px;animation:circleSpin 1.4s linear infinite;transform-origin:center;}
+  @keyframes circleSpin{to{transform:rotate(360deg);}}
+
+  .demo-orbit{position:relative;width:50px;height:50px;border:2px solid #e3e3e6;border-radius:50%;animation:orbitSpin 1.6s linear infinite;}
+  .demo-orbit-dot{position:absolute;top:-4px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:#111;}
+  @keyframes orbitSpin{to{transform:rotate(360deg);}}
+
+  .demo-squares{display:flex;gap:6px;}
+  .demo-squares span{width:12px;height:12px;border-radius:4px;background:#111;animation:squarePulse 1.2s ease-in-out infinite;}
+  .demo-squares span:nth-child(2){animation-delay:.15s;}
+  .demo-squares span:nth-child(3){animation-delay:.3s;}
+  @keyframes squarePulse{0%,80%,100%{transform:scale(.6);opacity:.4;}40%{transform:scale(1.15);opacity:1;}}
+
+  /* ============ HOVER-style demos (now looping automatically) ============ */
+  .demo-lift{width:86px;height:56px;background:#111;border-radius:16px;animation:liftLoop 1.8s ease-in-out infinite alternate;}
+  @keyframes liftLoop{from{transform:translateY(0);box-shadow:0 1px 2px rgba(0,0,0,.06);}to{transform:translateY(-10px);box-shadow:0 18px 26px rgba(0,0,0,.18);}}
 
   .demo-underline{font-size:17px;font-weight:700;position:relative;padding-bottom:5px;}
-  .demo-underline::after{content:'';position:absolute;left:0;bottom:0;width:0%;height:2px;background:#111;transition:width .45s var(--ease);}
-  .card:hover .demo-underline::after{width:100%;}
+  .demo-underline::after{content:'';position:absolute;left:0;bottom:0;height:2px;background:#111;animation:underlineLoop 2s ease-in-out infinite alternate;}
+  @keyframes underlineLoop{from{width:0%;}to{width:100%;}}
 
-  .demo-iconrotate svg{width:34px;height:34px;transition:transform .5s var(--ease);}
-  .card:hover .demo-iconrotate svg{transform:rotate(180deg);}
+  .demo-iconrotate svg{width:34px;height:34px;animation:iconRotateLoop 1.8s ease-in-out infinite alternate;}
+  @keyframes iconRotateLoop{from{transform:rotate(0deg);}to{transform:rotate(180deg);}}
 
   .demo-borderdraw{width:64px;height:64px;}
-  .demo-borderdraw rect{transition:stroke-dashoffset .6s var(--ease);}
-  .card:hover .demo-borderdraw rect{stroke-dashoffset:0;}
+  .demo-borderdraw rect{animation:borderDrawLoop 2.2s ease-in-out infinite alternate;}
+  @keyframes borderDrawLoop{from{stroke-dashoffset:280;}to{stroke-dashoffset:0;}}
 
-  .demo-glow{width:64px;height:64px;border-radius:18px;background:#111;transition:box-shadow .4s var(--ease), transform .4s var(--ease);}
-  .card:hover .demo-glow{box-shadow:0 0 0 1px #111, 0 0 32px 8px rgba(0,0,0,.32);transform:scale(1.06);}
+  .demo-glow{width:64px;height:64px;border-radius:18px;background:#111;animation:glowLoop 1.8s ease-in-out infinite alternate;}
+  @keyframes glowLoop{from{box-shadow:0 0 0 1px rgba(17,17,17,.15);transform:scale(1);}to{box-shadow:0 0 0 1px #111, 0 0 32px 8px rgba(0,0,0,.32);transform:scale(1.06);}}
 
-  .demo-magnet{padding:13px 24px;border-radius:999px;background:#111;color:#fff;font-weight:700;font-size:13px;display:inline-block;transition:transform .35s var(--ease);}
-  .card:hover .demo-magnet{transform:scale(1.12) rotate(-3deg);}
+  .demo-magnet{padding:13px 24px;border-radius:999px;background:#111;color:#fff;font-weight:700;font-size:13px;display:inline-block;animation:magnetLoop 1.7s ease-in-out infinite alternate;}
+  @keyframes magnetLoop{from{transform:scale(1) rotate(0deg);}to{transform:scale(1.12) rotate(-3deg);}}
+
+  .demo-tilt{width:74px;height:56px;background:#111;border-radius:16px;animation:tiltLoop 2.1s ease-in-out infinite alternate;}
+  @keyframes tiltLoop{from{transform:perspective(400px) rotateX(0) rotateY(0) translateY(0);}to{transform:perspective(400px) rotateX(12deg) rotateY(-14deg) translateY(-4px);}}
+
+  .demo-reveal{position:relative;padding:11px 24px;border:1.5px solid #111;border-radius:999px;font-weight:700;font-size:13px;overflow:hidden;}
+  .demo-reveal span{position:relative;z-index:2;animation:revealTextLoop 2.2s ease-in-out infinite alternate;}
+  .demo-reveal::before{content:'';position:absolute;inset:0;background:#111;z-index:1;animation:revealBgLoop 2.2s ease-in-out infinite alternate;}
+  @keyframes revealBgLoop{from{transform:translateX(-100%);}to{transform:translateX(0);}}
+  @keyframes revealTextLoop{from{color:#111;}to{color:#fff;}}
+
+  .demo-corners{position:relative;width:70px;height:70px;}
+  .demo-corners .subject{position:absolute;inset:20px;background:#e3e3e6;border-radius:8px;}
+  .demo-corners .c{position:absolute;width:14px;height:14px;border:2px solid #111;animation-duration:2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate;}
+  .demo-corners .c1{top:6px;left:6px;border-right:none;border-bottom:none;animation-name:cornerLoop1;}
+  .demo-corners .c2{top:6px;right:6px;border-left:none;border-bottom:none;animation-name:cornerLoop2;}
+  .demo-corners .c3{bottom:6px;left:6px;border-right:none;border-top:none;animation-name:cornerLoop3;}
+  .demo-corners .c4{bottom:6px;right:6px;border-left:none;border-top:none;animation-name:cornerLoop4;}
+  @keyframes cornerLoop1{from{opacity:0;transform:translate(6px,6px);}to{opacity:1;transform:translate(0,0);}}
+  @keyframes cornerLoop2{from{opacity:0;transform:translate(-6px,6px);}to{opacity:1;transform:translate(0,0);}}
+  @keyframes cornerLoop3{from{opacity:0;transform:translate(6px,-6px);}to{opacity:1;transform:translate(0,0);}}
+  @keyframes cornerLoop4{from{opacity:0;transform:translate(-6px,-6px);}to{opacity:1;transform:translate(0,0);}}
+
+  .demo-swap{height:24px;overflow:hidden;font-weight:700;font-size:16px;}
+  .demo-swap .swap-inner{display:flex;flex-direction:column;animation:swapLoop 2s ease-in-out infinite alternate;}
+  .demo-swap .swap-inner span{height:24px;line-height:24px;}
+  @keyframes swapLoop{from{transform:translateY(0);}to{transform:translateY(-24px);}}
+
+  .demo-arrow{display:flex;align-items:center;gap:6px;font-weight:700;font-size:13px;}
+  .demo-arrow svg{width:16px;height:16px;animation:arrowLoop 1.5s ease-in-out infinite alternate;}
+  @keyframes arrowLoop{from{transform:translateX(0);}to{transform:translateX(6px);}}
+
+  .demo-ringfocus{width:50px;height:50px;border-radius:50%;background:#111;position:relative;}
+  .demo-ringfocus::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:2px solid #111;animation:ringFocusLoop 1.8s ease-in-out infinite alternate;}
+  @keyframes ringFocusLoop{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
 
   /* ============ TEXT demos ============ */
   .demo-typing{font-family:'SF Mono',Menlo,Consolas,monospace;font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;border-right:2px solid #111;width:5em;animation:typing 3.2s steps(5,end) infinite, caretBlink .8s step-end infinite;}
@@ -175,6 +226,24 @@
   .demo-stagger span:nth-child(4){animation-delay:.3s;}
   @keyframes fadeUp{0%{opacity:0;transform:translateY(12px);}25%,65%{opacity:1;transform:translateY(0);}90%,100%{opacity:0;transform:translateY(-8px);}}
 
+  .demo-marquee{width:150px;overflow:hidden;white-space:nowrap;}
+  .demo-marquee span{display:inline-block;font-weight:700;font-size:14px;padding-left:100%;animation:marquee 6s linear infinite;}
+  @keyframes marquee{to{transform:translateX(-100%);}}
+
+  .demo-pop{display:inline-block;font-size:21px;font-weight:800;animation:pop 2.4s cubic-bezier(.34,1.56,.64,1) infinite;}
+  @keyframes pop{0%{transform:scale(0);opacity:0;}15%{transform:scale(1.2);opacity:1;}30%{transform:scale(.9);}45%{transform:scale(1.05);}65%,85%{transform:scale(1);}100%{transform:scale(0);opacity:0;}}
+
+  .demo-flipchars{perspective:300px;font-size:19px;font-weight:800;}
+  .demo-flipchars i{display:inline-block;font-style:normal;animation:charFlip 2s ease-in-out infinite;}
+  .demo-flipchars i:nth-child(2){animation-delay:.15s;}
+  .demo-flipchars i:nth-child(3){animation-delay:.3s;}
+  .demo-flipchars i:nth-child(4){animation-delay:.45s;}
+  @keyframes charFlip{0%,100%{transform:rotateX(0);}50%{transform:rotateX(360deg);}}
+
+  .demo-highlight{position:relative;font-size:19px;font-weight:800;padding:0 2px;}
+  .demo-highlight::before{content:'';position:absolute;left:0;bottom:2px;height:38%;width:0;background:#d9d9dc;z-index:-1;animation:highlightSweep 2.2s ease-in-out infinite;}
+  @keyframes highlightSweep{0%,15%{width:0;}45%,80%{width:100%;}100%{width:0;}}
+
   /* ============ MORPH demos ============ */
   .demo-blob{width:66px;height:66px;background:#111;animation:blobMorph 6s ease-in-out infinite;}
   @keyframes blobMorph{
@@ -185,8 +254,8 @@
   }
 
   .demo-flip-wrap{width:76px;height:76px;perspective:600px;}
-  .demo-flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s var(--ease);}
-  .card:hover .demo-flip-inner{transform:rotateY(180deg);}
+  .demo-flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;animation:flipLoop 2.4s ease-in-out infinite alternate;}
+  @keyframes flipLoop{from{transform:rotateY(0deg);}to{transform:rotateY(180deg);}}
   .demo-flip-face{position:absolute;inset:0;border-radius:18px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;font-weight:800;font-size:13px;}
   .demo-flip-front{background:#111;color:#fff;}
   .demo-flip-back{background:#e3e3e6;color:#111;transform:rotateY(180deg);}
@@ -215,10 +284,26 @@
   .demo-breathe{width:58px;height:58px;border-radius:20px;background:#111;animation:breathe 3s ease-in-out infinite;}
   @keyframes breathe{0%,100%{transform:scale(.82);opacity:.55;}50%{transform:scale(1.06);opacity:1;}}
 
+  .demo-squeeze{width:58px;height:58px;background:#111;border-radius:18px;animation:squeeze 2.2s ease-in-out infinite;}
+  @keyframes squeeze{0%,100%{transform:scale(1,1);}25%{transform:scale(1.3,.7);}50%{transform:scale(.85,1.15);}75%{transform:scale(1.15,.85);}}
+
+  .demo-twist{width:56px;height:56px;background:#111;border-radius:16px;animation:twist 2.4s ease-in-out infinite;}
+  @keyframes twist{0%,100%{transform:skew(0deg,0deg) rotate(0deg);}25%{transform:skew(10deg,4deg) rotate(6deg);}75%{transform:skew(-10deg,-4deg) rotate(-6deg);}}
+
+  .demo-fold-wrap{perspective:400px;}
+  .demo-fold{width:58px;height:58px;background:#111;border-radius:14px;transform-origin:top center;animation:fold 2.4s ease-in-out infinite;}
+  @keyframes fold{0%,100%{transform:rotateX(0deg);}50%{transform:rotateX(-130deg);}}
+
+  .demo-elastic{width:56px;height:56px;background:#111;border-radius:50%;animation:elastic 1.8s cubic-bezier(.34,1.56,.64,1) infinite;}
+  @keyframes elastic{0%,100%{transform:scale(1);}30%{transform:scale(1.35,.7);}50%{transform:scale(.8,1.25);}70%{transform:scale(1.1,.92);}85%{transform:scale(.96,1.03);}}
+
   /* ---------- tabbar (iOS26 style floating glass pill) ---------- */
   .tabbar{
     position:fixed;left:50%;bottom:max(20px, env(safe-area-inset-bottom));
-    transform:translateX(-50%);
+    transform:translateX(-50%) translateZ(0);
+    -webkit-transform:translateX(-50%) translateZ(0);
+    will-change:transform;
+    isolation:isolate;
     width:calc(100% - 16px);
     max-width:1400px;
     display:flex;gap:4px;padding:8px;
@@ -234,16 +319,26 @@
     position:absolute;
     top:8px;bottom:8px;left:0;
     width:0;
-    background:rgba(140,140,145,.4);
-    backdrop-filter:blur(14px) saturate(160%);
-    -webkit-backdrop-filter:blur(14px) saturate(160%);
-    border-radius:999px;
-    box-shadow:0 4px 12px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.25);
-    transition:transform .55s cubic-bezier(.32,.72,0,1), width .55s cubic-bezier(.32,.72,0,1);
     z-index:0;
     pointer-events:none;
+    transition:transform .5s cubic-bezier(.22,.61,.36,1), width .5s cubic-bezier(.22,.61,.36,1);
   }
-  .tab-indicator.no-anim{transition:none;}
+  .tab-indicator-fill{
+    width:100%;height:100%;
+    background:rgba(140,140,145,.55);
+    border-radius:999px;
+    box-shadow:0 4px 12px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.25);
+    transform-origin:50% 100%;
+  }
+  .tab-indicator-fill.poyon{
+    animation:poyon .48s cubic-bezier(.3,.9,.4,1) 1;
+  }
+  @keyframes poyon{
+    0%{transform:scaleX(1);}
+    38%{transform:scaleX(1.14);}
+    68%{transform:scaleX(.95);}
+    100%{transform:scaleX(1);}
+  }
   .tab{
     position:relative;z-index:1;
     flex:1 1 0;
@@ -254,7 +349,7 @@
     -webkit-tap-highlight-color:transparent;
   }
   .tab svg{width:21px;height:21px;flex:none;transition:transform .4s var(--ease);}
-  .tab.active{color:#fff;}
+  .tab.active{color:#111;font-weight:800;}
   .tab.active svg{transform:scale(1.06);}
   .tab:not(.active):hover{color:#111;}
   .tab:focus-visible{outline:2px solid #111;outline-offset:3px;}
@@ -272,7 +367,7 @@
   <h1>Animations</h1>
   <div class="meta">
     <span>CSSアニメーション ギャラリー</span>
-    <span id="metaCount"><strong>6</strong> パターン ・ ローディング</span>
+    <span id="metaCount"><strong>10</strong> パターン ・ ローディング</span>
   </div>
 </div>
 
@@ -365,6 +460,60 @@
 }</code></pre></details>
       </div>
     </div>
+    <div class="card">
+      <div class="preview"><div class="demo-skeleton"><span></span><span></span><span></span></div></div>
+      <div class="info">
+        <h3>スケルトン</h3>
+        <p>グラデーションが流れ、読み込み中のコンテンツ枠を表現する。</p>
+        <details><summary>コード</summary><pre><code>.bar{
+  background:linear-gradient(90deg,#e3e3e6 25%,#f4f4f5 37%,#e3e3e6 63%);
+  background-size:400% 100%;
+  animation:shimmer 1.6s ease-in-out infinite;
+}
+@keyframes shimmer{
+  0%{background-position:100% 0}
+  100%{background-position:-100% 0}
+}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview">
+        <svg class="demo-circle" viewBox="0 0 48 48">
+          <circle cx="24" cy="24" r="20" fill="none" stroke="#e3e3e6" stroke-width="4"/>
+          <circle cx="24" cy="24" r="20" fill="none" stroke="#111" stroke-width="4" stroke-linecap="round" stroke-dasharray="126" stroke-dashoffset="94"/>
+        </svg>
+      </div>
+      <div class="info">
+        <h3>サークル</h3>
+        <p>丸みのある太い円弧が回転する、iOSライクなローダー。</p>
+        <details><summary>コード</summary><pre><code>&lt;circle stroke-dasharray="126" stroke-dashoffset="94"/&gt;
+.arc{animation:spin 1.4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview"><div class="demo-orbit"><div class="demo-orbit-dot"></div></div></div>
+      <div class="info">
+        <h3>オービット</h3>
+        <p>点が円周を一定速度でぐるぐる周回する。</p>
+        <details><summary>コード</summary><pre><code>.ring{animation:spin 1.6s linear infinite}
+.dot{position:absolute;top:-4px;left:50%}
+@keyframes spin{to{transform:rotate(360deg)}}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview"><div class="demo-squares"><span></span><span></span><span></span></div></div>
+      <div class="info">
+        <h3>スクエアズ</h3>
+        <p>角丸の四角が順番に拡大し、波のように連なる。</p>
+        <details><summary>コード</summary><pre><code>.sq{animation:pulse 1.2s ease-in-out infinite}
+.sq:nth-child(2){animation-delay:.15s}
+@keyframes pulse{
+  0%,80%,100%{transform:scale(.6);opacity:.4}
+  40%{transform:scale(1.15);opacity:1}
+}</code></pre></details>
+      </div>
+    </div>
   </section>
 
   <!-- ============ HOVER ============ -->
@@ -373,25 +522,24 @@
       <div class="preview"><div class="demo-lift"></div></div>
       <div class="info">
         <h3>リフト</h3>
-        <p>カーソルを乗せると影が広がりながら浮き上がる。<span class="hoverhint">（カードにホバー）</span></p>
-        <details><summary>コード</summary><pre><code>.el{transition:transform .4s, box-shadow .4s}
-.el:hover{
-  transform:translateY(-10px);
-  box-shadow:0 18px 26px rgba(0,0,0,.18);
+        <p>影を広げながら浮き上がり、また沈むを繰り返す。</p>
+        <details><summary>コード</summary><pre><code>.el{animation:lift 1.8s ease-in-out infinite alternate}
+@keyframes lift{
+  from{transform:translateY(0);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+  to{transform:translateY(-10px);box-shadow:0 18px 26px rgba(0,0,0,.18)}
 }</code></pre></details>
       </div>
     </div>
     <div class="card">
-      <div class="preview"><span class="demo-underline">Underline</span></div>
+      <div class="preview"><span class="demo-underline">アンダーライン</span></div>
       <div class="info">
         <h3>アンダーライン</h3>
-        <p>下線が左端から右端へ伸びていく定番のリンク表現。</p>
+        <p>下線が左端から右端へ伸び、また消えてを繰り返す。</p>
         <details><summary>コード</summary><pre><code>.link::after{
-  content:'';width:0%;height:2px;
-  background:#111;
-  transition:width .45s;
+  height:2px;background:#111;
+  animation:underline 2s ease-in-out infinite alternate;
 }
-.link:hover::after{width:100%}</code></pre></details>
+@keyframes underline{from{width:0%}to{width:100%}}</code></pre></details>
       </div>
     </div>
     <div class="card">
@@ -404,9 +552,9 @@
       </div>
       <div class="info">
         <h3>アイコン回転</h3>
-        <p>ホバーでアイコンが180度回転し、状態の切り替えを示す。</p>
-        <details><summary>コード</summary><pre><code>.icon{transition:transform .5s}
-.el:hover .icon{transform:rotate(180deg)}</code></pre></details>
+        <p>アイコンが180度回転してはもとに戻るを繰り返す。</p>
+        <details><summary>コード</summary><pre><code>.icon{animation:rotate 1.8s ease-in-out infinite alternate}
+@keyframes rotate{from{transform:rotate(0)}to{transform:rotate(180deg)}}</code></pre></details>
       </div>
     </div>
     <div class="card">
@@ -417,24 +565,23 @@
       </div>
       <div class="info">
         <h3>ボーダードロー</h3>
-        <p>ホバーで枠線が輪郭をなぞるように描かれていく。</p>
+        <p>枠線が輪郭をなぞって現れ、また消えていく。</p>
         <details><summary>コード</summary><pre><code>rect{
   stroke-dasharray:280;
-  stroke-dashoffset:280;
-  transition:stroke-dashoffset .6s;
+  animation:draw 2.2s ease-in-out infinite alternate;
 }
-.el:hover rect{stroke-dashoffset:0}</code></pre></details>
+@keyframes draw{from{stroke-dashoffset:280}to{stroke-dashoffset:0}}</code></pre></details>
       </div>
     </div>
     <div class="card">
       <div class="preview"><div class="demo-glow"></div></div>
       <div class="info">
         <h3>グロー</h3>
-        <p>ホバーで輪郭ににじむような淡い光が広がる。</p>
-        <details><summary>コード</summary><pre><code>.el{transition:box-shadow .4s, transform .4s}
-.el:hover{
-  box-shadow:0 0 0 1px #111, 0 0 32px 8px rgba(0,0,0,.32);
-  transform:scale(1.06);
+        <p>輪郭ににじむような淡い光が現れては消えていく。</p>
+        <details><summary>コード</summary><pre><code>.el{animation:glow 1.8s ease-in-out infinite alternate}
+@keyframes glow{
+  from{box-shadow:0 0 0 1px rgba(17,17,17,.15);transform:scale(1)}
+  to{box-shadow:0 0 32px 8px rgba(0,0,0,.32);transform:scale(1.06)}
 }</code></pre></details>
       </div>
     </div>
@@ -442,10 +589,92 @@
       <div class="preview"><span class="demo-magnet">ボタン</span></div>
       <div class="info">
         <h3>マグネット</h3>
-        <p>拡大とわずかな回転が重なり、吸い寄せられるように反応する。</p>
-        <details><summary>コード</summary><pre><code>.btn{transition:transform .35s}
-.btn:hover{
-  transform:scale(1.12) rotate(-3deg);
+        <p>拡大とわずかな回転が重なり、吸い寄せられるように揺れる。</p>
+        <details><summary>コード</summary><pre><code>.btn{animation:magnet 1.7s ease-in-out infinite alternate}
+@keyframes magnet{
+  from{transform:scale(1) rotate(0)}
+  to{transform:scale(1.12) rotate(-3deg)}
+}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview"><div class="demo-tilt"></div></div>
+      <div class="info">
+        <h3>チルト</h3>
+        <p>遠近感を伴って傾き、奥行きのある反応を繰り返す。</p>
+        <details><summary>コード</summary><pre><code>.el{animation:tilt 2.1s ease-in-out infinite alternate}
+@keyframes tilt{
+  from{transform:perspective(400px) rotateX(0) rotateY(0)}
+  to{transform:perspective(400px) rotateX(12deg) rotateY(-14deg)}
+}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview"><div class="demo-reveal"><span>ボタン</span></div></div>
+      <div class="info">
+        <h3>スライド塗り</h3>
+        <p>背景が左端から塗りつぶされ、文字色が反転を繰り返す。</p>
+        <details><summary>コード</summary><pre><code>.btn::before{
+  background:#111;
+  animation:fill 2.2s ease-in-out infinite alternate;
+}
+@keyframes fill{from{transform:translateX(-100%)}to{transform:translateX(0)}}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview">
+        <div class="demo-corners">
+          <div class="subject"></div>
+          <div class="c c1"></div><div class="c c2"></div><div class="c c3"></div><div class="c c4"></div>
+        </div>
+      </div>
+      <div class="info">
+        <h3>フォーカスコーナー</h3>
+        <p>四隅のマーカーが外側から近づき、対象を選択しつづける。</p>
+        <details><summary>コード</summary><pre><code>.corner{animation:focus 2s ease-in-out infinite alternate}
+@keyframes focus{
+  from{opacity:0;transform:translate(6px,6px)}
+  to{opacity:1;transform:translate(0,0)}
+}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview">
+        <div class="demo-swap">
+          <div class="swap-inner"><span>もっと見る</span><span>詳細へ</span></div>
+        </div>
+      </div>
+      <div class="info">
+        <h3>テキストスワップ</h3>
+        <p>上の文字が抜け、隠れていた文字に切り替わるを繰り返す。</p>
+        <details><summary>コード</summary><pre><code>.wrap{overflow:hidden;height:24px}
+.inner{animation:swap 2s ease-in-out infinite alternate}
+@keyframes swap{from{transform:translateY(0)}to{transform:translateY(-24px)}}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview">
+        <div class="demo-arrow">
+          <span>次へ</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+      <div class="info">
+        <h3>アロー</h3>
+        <p>矢印だけが右へすっと動き、先へ進む予感を繰り返す。</p>
+        <details><summary>コード</summary><pre><code>svg{animation:arrow 1.5s ease-in-out infinite alternate}
+@keyframes arrow{from{transform:translateX(0)}to{transform:translateX(6px)}}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview"><div class="demo-ringfocus"></div></div>
+      <div class="info">
+        <h3>リングフォーカス</h3>
+        <p>外側に円環が現れては消え、対象をやさしく強調する。</p>
+        <details><summary>コード</summary><pre><code>.el::after{animation:ring 1.8s ease-in-out infinite alternate}
+@keyframes ring{
+  from{opacity:0;transform:scale(.7)}
+  to{opacity:1;transform:scale(1)}
 }</code></pre></details>
       </div>
     </div>
@@ -536,6 +765,57 @@ span:nth-child(2){animation-delay:.1s}
 }</code></pre></details>
       </div>
     </div>
+    <div class="card">
+      <div class="preview"><div class="demo-marquee"><span>ずっと流れるテキスト・ずっと流れるテキスト・</span></div></div>
+      <div class="info">
+        <h3>マーキー</h3>
+        <p>テキストが途切れなく左へ流れ続ける。</p>
+        <details><summary>コード</summary><pre><code>.track{overflow:hidden;white-space:nowrap}
+.text{padding-left:100%;animation:marquee 6s linear infinite}
+@keyframes marquee{to{transform:translateX(-100%)}}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview"><span class="demo-pop">ポップ</span></div>
+      <div class="info">
+        <h3>ポップ</h3>
+        <p>バネのような弾みで文字が飛び出し、また縮んで消える。</p>
+        <details><summary>コード</summary><pre><code>.text{animation:pop 2.4s cubic-bezier(.34,1.56,.64,1) infinite}
+@keyframes pop{
+  0%{transform:scale(0);opacity:0}
+  15%{transform:scale(1.2);opacity:1}
+  100%{transform:scale(0);opacity:0}
+}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview"><span class="demo-flipchars"><i>回</i><i>転</i><i>文</i><i>字</i></span></div>
+      <div class="info">
+        <h3>文字回転</h3>
+        <p>各文字が奥へ回転しながら順番にひと巡りする。</p>
+        <details><summary>コード</summary><pre><code>i{animation:flip 2s ease-in-out infinite}
+i:nth-child(2){animation-delay:.15s}
+@keyframes flip{
+  0%,100%{transform:rotateX(0)}
+  50%{transform:rotateX(360deg)}
+}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview"><span class="demo-highlight">マーカー</span></div>
+      <div class="info">
+        <h3>ハイライト</h3>
+        <p>マーカーで線を引くように、背景の帯が左から伸びる。</p>
+        <details><summary>コード</summary><pre><code>.text::before{
+  position:absolute;left:0;bottom:2px;height:38%;
+  background:#d9d9dc;z-index:-1;
+  animation:sweep 2.2s ease-in-out infinite;
+}
+@keyframes sweep{
+  0%,15%{width:0} 45%,80%{width:100%} 100%{width:0}
+}</code></pre></details>
+      </div>
+    </div>
   </section>
 
   <!-- ============ MORPH ============ -->
@@ -563,12 +843,12 @@ span:nth-child(2){animation-delay:.1s}
       </div>
       <div class="info">
         <h3>フリップ</h3>
-        <p>ホバーでカードが3D回転し、裏面が現れる。<span class="hoverhint">（カードにホバー）</span></p>
+        <p>カードが3D回転し、表と裏をずっと行き来する。</p>
         <details><summary>コード</summary><pre><code>.inner{
   transform-style:preserve-3d;
-  transition:transform .7s;
+  animation:flip 2.4s ease-in-out infinite alternate;
 }
-.el:hover .inner{transform:rotateY(180deg)}
+@keyframes flip{from{transform:rotateY(0)}to{transform:rotateY(180deg)}}
 .face{backface-visibility:hidden}
 .back{transform:rotateY(180deg)}</code></pre></details>
       </div>
@@ -628,12 +908,66 @@ span:nth-child(2){animation-delay:.15s}
 }</code></pre></details>
       </div>
     </div>
+    <div class="card">
+      <div class="preview"><div class="demo-squeeze"></div></div>
+      <div class="info">
+        <h3>スクイーズ</h3>
+        <p>縦横の比率を入れ替えながら押しつぶされる動き。</p>
+        <details><summary>コード</summary><pre><code>.el{animation:squeeze 2.2s ease-in-out infinite}
+@keyframes squeeze{
+  0%,100%{transform:scale(1,1)}
+  25%{transform:scale(1.3,.7)}
+  50%{transform:scale(.85,1.15)}
+}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview"><div class="demo-twist"></div></div>
+      <div class="info">
+        <h3>ツイスト</h3>
+        <p>斜めに歪ませながら左右にひねる、ゴムのような質感。</p>
+        <details><summary>コード</summary><pre><code>.el{animation:twist 2.4s ease-in-out infinite}
+@keyframes twist{
+  0%,100%{transform:skew(0,0) rotate(0)}
+  25%{transform:skew(10deg,4deg) rotate(6deg)}
+  75%{transform:skew(-10deg,-4deg) rotate(-6deg)}
+}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview"><div class="demo-fold-wrap"><div class="demo-fold"></div></div></div>
+      <div class="info">
+        <h3>フォールド</h3>
+        <p>上端を軸に折りたたまれ、また開いていく。</p>
+        <details><summary>コード</summary><pre><code>.el{
+  transform-origin:top center;
+  animation:fold 2.4s ease-in-out infinite;
+}
+@keyframes fold{
+  0%,100%{transform:rotateX(0)}
+  50%{transform:rotateX(-130deg)}
+}</code></pre></details>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview"><div class="demo-elastic"></div></div>
+      <div class="info">
+        <h3>エラスティック</h3>
+        <p>ゴムのように伸縮を繰り返す、弾力のある動き。</p>
+        <details><summary>コード</summary><pre><code>.el{animation:elastic 1.8s cubic-bezier(.34,1.56,.64,1) infinite}
+@keyframes elastic{
+  0%,100%{transform:scale(1)}
+  30%{transform:scale(1.35,.7)}
+  50%{transform:scale(.8,1.25)}
+}</code></pre></details>
+      </div>
+    </div>
   </section>
 
 </main>
 
 <nav class="tabbar" role="tablist" aria-label="アニメーションカテゴリ">
-  <div class="tab-indicator no-anim" aria-hidden="true"></div>
+  <div class="tab-indicator" aria-hidden="true"><div class="tab-indicator-fill"></div></div>
   <button class="tab active" data-target="loading" aria-selected="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3a9 9 0 1 0 9 9"/></svg>
     <span>ローディング</span>
@@ -657,21 +991,30 @@ span:nth-child(2){animation-delay:.15s}
   const sections = document.querySelectorAll('.category');
   const metaCount = document.getElementById('metaCount');
   const indicator = document.querySelector('.tab-indicator');
+  const indicatorFill = document.querySelector('.tab-indicator-fill');
   const names = { loading:'ローディング', hover:'ホバー', text:'テキスト', morph:'モーフ' };
 
-  function moveIndicator(tab){
+  function setIndicatorInstant(tab){
     if(!tab) return;
     indicator.style.width = tab.offsetWidth + 'px';
     indicator.style.transform = 'translateX(' + tab.offsetLeft + 'px)';
   }
+
+  function moveIndicatorTo(tab){
+    if(!tab) return;
+    setIndicatorInstant(tab); // 位置と幅はCSSのtransitionでなめらかに移動する
+    indicatorFill.classList.remove('poyon');
+    void indicatorFill.offsetWidth; // reflow させてアニメーションを毎回リスタート
+    indicatorFill.classList.add('poyon');
+  }
+
   function positionInitial(){
-    moveIndicator(document.querySelector('.tab.active'));
-    requestAnimationFrame(()=>{ indicator.classList.remove('no-anim'); });
+    setIndicatorInstant(document.querySelector('.tab.active'));
   }
   positionInitial();
   window.addEventListener('load', positionInitial);
   if(document.fonts && document.fonts.ready){ document.fonts.ready.then(positionInitial); }
-  window.addEventListener('resize', ()=> moveIndicator(document.querySelector('.tab.active')));
+  window.addEventListener('resize', ()=> setIndicatorInstant(document.querySelector('.tab.active')));
 
   tabs.forEach(tab=>{
     tab.addEventListener('click', ()=>{
@@ -681,10 +1024,11 @@ span:nth-child(2){animation-delay:.15s}
         t.classList.toggle('active', on);
         t.setAttribute('aria-selected', on ? 'true' : 'false');
       });
-      moveIndicator(tab);
+      moveIndicatorTo(tab);
       sections.forEach(s=>{
         s.classList.toggle('active', s.dataset.category===target);
       });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       const count = document.querySelector('.category[data-category="'+target+'"]').children.length;
       metaCount.innerHTML = '<strong>'+count+'</strong> パターン ・ '+names[target];
     });
